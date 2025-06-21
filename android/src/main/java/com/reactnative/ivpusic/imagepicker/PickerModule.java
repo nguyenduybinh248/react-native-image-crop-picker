@@ -367,7 +367,11 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private void initiatePicker(final Activity activity) {
         try {
             if (multiple) {
-               initiateModernPicker(activity);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU){
+                    initiateClassicPicker(activity);
+                }else{
+                    initiateModernPicker(activity);
+                }
             } else {
                initiateClassicPicker(activity);
             }

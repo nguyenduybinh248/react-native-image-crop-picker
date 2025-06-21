@@ -386,6 +386,20 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
             Intent intent = new Intent(photoPickerAction);
 
+            if (cropping || mediaType.equals("photo")) {
+                intent.setType("image/*");
+                if (cropping) {
+                    String[] mimetypes = {"image/jpeg", "image/png"};
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                }
+            } else if (mediaType.equals("video")) {
+                intent.setType("video/*");
+            } else {
+                intent.setType("*/*");
+                String[] mimetypes = {"image/*", "video/*"};
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+            }
+
             if (maxFiles != Integer.MAX_VALUE) {
                 intent.putExtra("android.provider.extra.PICK_IMAGES_MAX", maxFiles);
             }
